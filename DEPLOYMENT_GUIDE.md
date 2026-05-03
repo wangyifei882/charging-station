@@ -12,11 +12,11 @@
 
 | 应用 | URL | 说明 |
 |------|-----|------|
-| 监管与调度平台 | `http://8.136.31.200` | supervision-frontend |
-| 充电站运营管理平台 | `http://8.136.31.200/plus/` | charging-station-frontend-plus |
-| 后端 API | `http://8.136.31.200/api/` | Spring Boot，由 Nginx 代理 |
+| 监管与调度平台 | `http://******` | supervision-frontend |
+| 充电站运营管理平台 | `http://*****/plus/` | charging-station-frontend-plus |
+| 后端 API | `********/api/` | Spring Boot，由 Nginx 代理 |
 
-**登录凭据：** 用户名 `admin`，密码 `admin123`
+**登录凭据：** 用户名 `admin`，密码 `*****`
 
 ---
 
@@ -24,7 +24,7 @@
 
 ```bash
 # SSH 登录
-ssh root@8.136.31.200
+ssh root@********
 
 # 安装 JDK 17
 dnf install -y java-17-openjdk java-17-openjdk-devel
@@ -45,7 +45,7 @@ systemctl enable mysqld
 ```bash
 # 设置 root 密码
 mysql -u root <<SQL
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Wang926494334.';
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '*********';
 FLUSH PRIVILEGES;
 SQL
 
@@ -53,7 +53,7 @@ SQL
 mysql -u root -p'Wang926494334.' -e "CREATE DATABASE IF NOT EXISTS charging_station DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 # 开启远程访问
-mysql -u root -p'Wang926494334.' <<SQL
+mysql -u root -p'********' <<SQL
 CREATE USER IF NOT EXISTS 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'Wang926494334.';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
@@ -68,16 +68,16 @@ systemctl restart mysqld
 
 ```bash
 # 在本地机器导出数据库
-mysqldump -h localhost -P 3307 -u root -p"9264" \
+mysqldump -h localhost -P 3306 -u root -p"****" \
   --single-transaction --set-gtid-purged=OFF \
   --default-character-set=utf8mb4 charging_station \
   > /tmp/charging_station_dump.sql 2>/dev/null
 
 # 上传到服务器
-scp /tmp/charging_station_dump.sql root@8.136.31.200:/tmp/
+scp /tmp/charging_station_dump.sql root@*****:/tmp/
 
 # 在服务器上导入
-ssh root@8.136.31.200 "mysql -u root -p'Wang926494334.' charging_station < /tmp/charging_station_dump.sql"
+ssh root@****** "mysql -u root -p'******.' charging_station < /tmp/charging_station_dump.sql"
 ```
 
 ## 四、后端部署
@@ -93,7 +93,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/charging_station?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: root
-    password: "Wang926494334."
+    password: "*****"
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -106,7 +106,7 @@ mybatis-plus:
     db-config:
       id-type: auto
 jwt:
-  secret: Q2hhcmdpbmdTdGF0aW9uU2VjcmV0S2V5MjAyNFZlcnlMb25nQW5kU2VjdXJlRm9ySnd0VG9rZW5TaWdu
+  secret: ***********
   expiration: 86400000
   header: Authorization
 mqtt:
@@ -125,8 +125,8 @@ cd charging-station-backend
 mvn clean package -DskipTests
 
 # 上传 JAR 和配置
-scp target/charging-station-backend-1.0.0.jar root@8.136.31.200:/opt/charging-station-backend.jar
-scp src/main/resources/application-prod.yml root@8.136.31.200:/opt/application-prod.yml
+scp target/charging-station-backend-1.0.0.jar root@*****:/opt/charging-station-backend.jar
+scp src/main/resources/application-prod.yml root@*******:/opt/application-prod.yml
 ```
 
 ### 4.3 注册为系统服务
@@ -169,8 +169,8 @@ cd supervision-frontend
 npx vite build
 
 # 上传
-ssh root@8.136.31.200 "mkdir -p /var/www/html"
-scp -r dist/* root@8.136.31.200:/var/www/html/
+ssh root@***** "mkdir -p /var/www/html"
+scp -r dist/* root@******:/var/www/html/
 ```
 
 ### 5.2 充电站运营平台 (charging-station-frontend-plus)
@@ -205,8 +205,8 @@ cd charging-station-frontend-plus
 npx vite build
 
 # 上传
-ssh root@8.136.31.200 "mkdir -p /var/www/plus"
-scp -r dist/* root@8.136.31.200:/var/www/plus/
+ssh root@****** "mkdir -p /var/www/plus"
+scp -r dist/* root@*******:/var/www/plus/
 ```
 
 ## 六、Nginx 配置
@@ -278,16 +278,16 @@ journalctl -u charging-station -f          # 实时日志
 journalctl -u charging-station -n 50       # 最近 50 行
 
 # 重新部署后端
-scp target/charging-station-backend-1.0.0.jar root@8.136.31.200:/opt/charging-station-backend.jar
-ssh root@8.136.31.200 "systemctl restart charging-station"
+scp target/charging-station-backend-1.0.0.jar root@******:/opt/charging-station-backend.jar
+ssh root@****** "systemctl restart charging-station"
 
 # 重新部署前端
 cd supervision-frontend && npx vite build
-scp -r dist/* root@8.136.31.200:/var/www/html/
+scp -r dist/* root@******:/var/www/html/
 
 # 数据库备份
-ssh root@8.136.31.200 "mysqldump -u root -p'Wang926494334.' charging_station > /opt/backup.sql"
-scp root@8.136.31.200:/opt/backup.sql ./
+ssh root@****** "mysqldump -u root -p'Wang926494334.' charging_station > /opt/backup.sql"
+scp root@******:/opt/backup.sql ./
 ```
 
 ## 九、目录结构（服务器）
