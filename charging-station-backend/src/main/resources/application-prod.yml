@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/charging_station?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: "Wang926494334."
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.charging.station.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+mqtt:
+  broker:
+    enabled: false
+
+logging:
+  level:
+    com.charging.station: info
+
+jwt:
+  secret: Q2hhcmdpbmdTdGF0aW9uU2VjcmV0S2V5MjAyNFZlcnlMb25nQW5kU2VjdXJlRm9ySnd0VG9rZW5TaWdu
+  expiration: 86400000
+  header: Authorization

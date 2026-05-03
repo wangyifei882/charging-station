@@ -1,0 +1,67 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/charging_station?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: "9264"
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/**/*.xml
+  type-aliases-package: com.charging.station.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+jwt:
+  secret: Q2hhcmdpbmdTdGF0aW9uU2VjcmV0S2V5MjAyNFZlcnlMb25nQW5kU2VjdXJlRm9ySnd0VG9rZW5TaWdu
+  expiration: 86400000
+  header: Authorization
+
+iot:
+  platform:
+    base-url: http://iotapi.iot.yun.gdatacloud.com:32664
+    app-id: RDc1ghFy
+    app-secret: a7d7a3c2d096428d149897bcd042b924985a4a13
+    sync:
+      interval: 10
+      batch-size: 50
+    websocket:
+      enabled: true
+      heartbeat-interval: 30
+
+# MQTT Configuration for IoT Platform Data Subscription
+mqtt:
+  broker:
+    url: tcp://mqtt.yun.gdatacloud.com:31854
+    client-id: app-1776852488112
+  credentials:
+    username: LQ9UD427
+    password: 1fc4a3a990089321e7de910820ff1545cd97241c
+  topics:
+    real-time-data: iot/device/${subKey}/realTimeData/${nodeId}
+    status-data: iot/device/${subKey}/statusData/${nodeId}
+    life-cycle: iot/device/${subKey}/lifeCycle/${nodeId}
+    cmd-reply: iot/device/${subKey}/cmdReply/${nodeId}
+  subscription:
+    sub-key: "dingyue"
+    qos: 1
+    connection-timeout: 30
+    keep-alive-interval: 60
+    clean-session: false
+    automatic-reconnect: true
+
+logging:
+  level:
+    com.charging.station: debug
+    com.charging.station.mapper: debug

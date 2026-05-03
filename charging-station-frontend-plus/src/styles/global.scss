@@ -1,0 +1,360 @@
+// ==========================================
+// Design System — Warm Industrial
+// Clean professional enterprise dashboard
+// No AI tropes: no glassmorphism, no glow, no Inter
+// ==========================================
+
+// ---- Color Tokens ----
+// Warm neutral background with navy-petrol energy accent
+:root {
+  // Surfaces
+  --color-bg: #f6f7f9;
+  --color-bg-secondary: #eef0f4;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f8f9fb;
+  --color-surface-raised: #ffffff;
+
+  // Brand accent — deep petrol/navy for energy theme
+  --color-primary: #0d6b6e;
+  --color-primary-light: #159196;
+  --color-primary-bg: #e8f4f4;
+  --color-primary-border: #b8dada;
+
+  // Semantic
+  --color-success: #2d8a56;
+  --color-success-bg: #eaf5ef;
+  --color-warning: #b85c14;
+  --color-warning-bg: #fef5ec;
+  --color-danger: #c6343e;
+  --color-danger-bg: #fef0f1;
+
+  // Text
+  --color-text: #1e2126;
+  --color-text-secondary: #5b616e;
+  --color-text-muted: #9399a5;
+  --color-text-placeholder: #b9bfc8;
+  --color-text-inverse: #ffffff;
+
+  // Borders
+  --color-border: #e2e5ea;
+  --color-border-light: #eef0f3;
+  --color-border-hover: #c8cdd5;
+
+  // Shadows (subtle, no glow)
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 8px rgba(0, 0, 0, 0.04);
+
+  // Radius
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  // Spacing scale (4px base)
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+
+  // Typography
+  --font-sans: "PingFang SC", "Microsoft YaHei", "Hiragino Sans GB", "Noto Sans SC", system-ui, -apple-system, sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", "Consolas", "Menlo", monospace;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-base: 13px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 20px;
+  --font-size-3xl: 26px;
+
+  // Layout
+  --sidebar-width: 220px;
+  --header-height: 56px;
+
+  // Transitions
+  --transition-fast: 0.12s ease;
+  --transition-base: 0.2s ease;
+}
+
+// ---- Global Reset ----
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+// ---- Element Plus Theme Override ----
+// Use Element Plus CSS variables for deep theming
+
+// Table
+.el-table {
+  --el-table-bg-color: transparent;
+  --el-table-tr-bg-color: transparent;
+  --el-table-header-bg-color: var(--color-bg-secondary);
+  --el-table-row-hover-bg-color: var(--color-primary-bg);
+  --el-table-border-color: var(--color-border-light);
+  --el-table-text-color: var(--color-text);
+  --el-table-header-text-color: var(--color-text-secondary);
+
+  background: transparent;
+  font-size: var(--font-size-base);
+
+  th.el-table__cell {
+    background: var(--color-bg-secondary) !important;
+    color: var(--color-text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: var(--font-size-sm) !important;
+    letter-spacing: 0.02em !important;
+    border-bottom: 2px solid var(--color-border) !important;
+    padding: 12px !important;
+  }
+
+  td.el-table__cell {
+    border-bottom: 1px solid var(--color-border-light) !important;
+    padding: 12px !important;
+    color: var(--color-text) !important;
+    font-size: var(--font-size-base) !important;
+  }
+
+  .el-table__row:hover td {
+    background: var(--color-primary-bg) !important;
+  }
+
+  &.el-table--striped .el-table__body tr.el-table__row--striped td {
+    background: var(--color-bg) !important;
+  }
+}
+
+// Button
+.el-button {
+  font-weight: 500 !important;
+  font-size: var(--font-size-base) !important;
+  border-radius: var(--radius-sm) !important;
+  transition: all var(--transition-fast) !important;
+
+  &--primary {
+    background: var(--color-primary) !important;
+    border-color: var(--color-primary) !important;
+    color: #fff !important;
+    &:hover { background: var(--color-primary-light) !important; border-color: var(--color-primary-light) !important; }
+    &:active { background: #0a5557 !important; }
+  }
+
+  &--default {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--color-text) !important;
+    &:hover { border-color: var(--color-primary) !important; color: var(--color-primary) !important; }
+  }
+
+  &--danger {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-danger) !important;
+    color: var(--color-danger) !important;
+    &:hover { background: var(--color-danger-bg) !important; }
+  }
+
+  &--warning {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-warning) !important;
+    color: var(--color-warning) !important;
+    &:hover { background: var(--color-warning-bg) !important; }
+  }
+
+  &--success {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-success) !important;
+    color: var(--color-success) !important;
+    &:hover { background: var(--color-success-bg) !important; }
+  }
+}
+
+// Input
+.el-input {
+  --el-input-bg-color: var(--color-surface);
+  --el-input-border-color: var(--color-border);
+  --el-input-hover-border-color: var(--color-border-hover);
+  --el-input-focus-border-color: var(--color-primary);
+  --el-input-text-color: var(--color-text);
+  --el-input-placeholder-color: var(--color-text-placeholder);
+
+  .el-input__wrapper {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-sm) !important;
+    box-shadow: none !important;
+    transition: border-color var(--transition-fast) !important;
+
+    &:hover { border-color: var(--color-border-hover) !important; }
+    &.is-focus {
+      border-color: var(--color-primary) !important;
+      box-shadow: 0 0 0 2px rgba(13, 107, 110, 0.1) !important;
+    }
+  }
+}
+
+// Select
+.el-select {
+  .el-input__wrapper {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    box-shadow: none !important;
+    &:hover { border-color: var(--color-border-hover) !important; }
+  }
+  &.is-focused .el-input__wrapper {
+    border-color: var(--color-primary) !important;
+    box-shadow: 0 0 0 2px rgba(13, 107, 110, 0.1) !important;
+  }
+}
+
+.el-select-dropdown {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-lg) !important;
+
+  .el-select-dropdown__item {
+    color: var(--color-text) !important;
+    &.selected { color: var(--color-primary) !important; font-weight: 600 !important; }
+    &.hover { background: var(--color-primary-bg) !important; }
+    &:hover { background: var(--color-primary-bg) !important; }
+  }
+}
+
+// Pagination
+.el-pagination {
+  .btn-prev, .btn-next, .el-pager li {
+    background: var(--color-surface) !important;
+    border: 1px solid var(--color-border) !important;
+    color: var(--color-text-secondary) !important;
+    border-radius: var(--radius-sm) !important;
+    min-width: 32px !important;
+    height: 32px !important;
+
+    &:hover { color: var(--color-primary) !important; border-color: var(--color-primary) !important; }
+    &.is-active { background: var(--color-primary) !important; color: #fff !important; border-color: var(--color-primary) !important; }
+  }
+}
+
+// Tabs
+.el-tabs {
+  .el-tabs__header { border-bottom: 1px solid var(--color-border) !important; margin-bottom: 0 !important; }
+  .el-tabs__item {
+    color: var(--color-text-secondary) !important;
+    font-weight: 500 !important;
+    font-size: var(--font-size-md) !important;
+    padding: 0 var(--space-5) !important;
+    &:hover { color: var(--color-text) !important; }
+    &.is-active { color: var(--color-primary) !important; }
+  }
+  .el-tabs__active-bar { background: var(--color-primary) !important; height: 2px !important; }
+}
+
+// Dialog
+.el-dialog {
+  background: var(--color-surface) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: var(--shadow-lg) !important;
+
+  .el-dialog__header {
+    padding: var(--space-5) var(--space-6) !important;
+    border-bottom: 1px solid var(--color-border-light) !important;
+    margin: 0 !important;
+  }
+  .el-dialog__title { color: var(--color-text) !important; font-weight: 600 !important; font-size: var(--font-size-lg) !important; }
+  .el-dialog__body { padding: var(--space-6) !important; color: var(--color-text) !important; }
+  .el-dialog__footer { padding: var(--space-4) var(--space-6) !important; border-top: 1px solid var(--color-border-light) !important; }
+}
+
+// Tag
+.el-tag {
+  border-radius: var(--radius-sm) !important;
+  font-weight: 500 !important;
+}
+
+// Card
+.el-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-xs) !important;
+  background: var(--color-surface) !important;
+
+  .el-card__header {
+    border-bottom: 1px solid var(--color-border-light) !important;
+    padding: var(--space-4) var(--space-5) !important;
+    font-weight: 600 !important;
+    color: var(--color-text) !important;
+  }
+  .el-card__body { padding: var(--space-5) !important; }
+}
+
+// Form
+.el-form-item__label {
+  color: var(--color-text-secondary) !important;
+  font-weight: 500 !important;
+  font-size: var(--font-size-base) !important;
+}
+
+// Checkbox
+.el-checkbox {
+  --el-checkbox-checked-bg-color: var(--color-primary);
+  --el-checkbox-checked-border-color: var(--color-primary);
+}
+
+// Switch
+.el-switch {
+  --el-switch-on-color: var(--color-primary);
+}
+
+// Badge
+.el-badge {
+  --el-badge-bg-color: var(--color-danger);
+}
+
+// Message
+.el-message {
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+// ---- Utility Classes ----
+.text-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.text-sm { font-size: var(--font-size-sm); }
+.text-base { font-size: var(--font-size-base); }
+
+// ---- Scrollbar ----
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+  &:hover { background: var(--color-border-hover); }
+}

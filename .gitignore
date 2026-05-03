@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+target/
+build/
+*.class
+*.jar
+*.war
+
+# Vite
+.vite/
+*.tsbuildinfo
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+hs_err_pid*.log
+
+# Runtime
+*.pid
+*.tmp
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Misc
+*.zip
+*.tar.gz

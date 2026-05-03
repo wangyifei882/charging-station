@@ -1,0 +1,37 @@
+import request from './request'
+
+export const login = (data) => request.post('/auth/login', data)
+export const logout = () => request.post('/auth/logout')
+export const getMenus = () => request.get('/auth/menus')
+export const getDashboardOverview = () => request.get('/dashboard/overview')
+export const getLoadTrend = (hours = 24) => request.get(`/dashboard/load-trend?hours=${hours}`)
+export const getDeviceList = (params) => request.get('/devices', { params })
+export const getDeviceAll = () => request.get('/devices/all')
+export const getDeviceStats = () => request.get('/devices/stats')
+export const getDeviceById = (id) => request.get(`/devices/${id}`)
+export const addDevice = (data) => request.post('/devices', data)
+export const updateDevice = (id, data) => request.put(`/devices/${id}`, data)
+export const deleteDevice = (id) => request.delete(`/devices/${id}`)
+export const updateDeviceStatus = (id, status) => request.put(`/devices/${id}/status?status=${status}`)
+export const controlDevice = (id, data) => request.post(`/devices/${id}/control`, data)
+export const getOrderList = (params) => request.get('/charging/orders', { params })
+export const getOrderById = (id) => request.get(`/charging/orders/${id}`)
+export const refundOrder = (id, data) => request.post(`/charging/orders/${id}/refund`, data)
+export const getRevenueStats = (timeDimension) => request.get('/charging/orders/revenue-stats', { params: { timeDimension } })
+export const getTicketList = (params) => request.get('/faults/tickets', { params })
+export const getTicketById = (id) => request.get(`/faults/tickets/${id}`)
+export const createTicket = (data) => request.post('/faults/tickets', data)
+export const updateTicketStatus = (id, status) => request.put(`/faults/tickets/${id}/status`, { status })
+export const completeTicket = (id, data) => request.put(`/faults/tickets/${id}/complete`, data)
+
+// 用户管理
+export const getUserList = (params) => request.get('/users', { params })
+export const getUserById = (id) => request.get(`/users/${id}`)
+export const addUser = (data) => request.post('/users', data)
+export const updateUser = (id, data) => request.put(`/users/${id}`, data)
+export const deleteUser = (id) => request.delete(`/users/${id}`)
+export const updateUserStatus = (id, status) => request.put(`/users/${id}/status`, { status })
+
+// 操作日志
+export const getOperationLogs = (params) => request.get('/operation-logs', { params })
+export const addOperationLog = (data) => request.post('/operation-logs', data)
